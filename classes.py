@@ -83,3 +83,15 @@ class Server:
                     data = client_socket.recv(1024).decode('utf-8')
                 client_socket.close()
 
+
+class Client:
+    def __init__(self, addr, host):
+        """
+        Constructor function.
+        parameters: addr, host.
+        addr: The IP address of the server.
+        host: The port the server listens from.
+        """
+        
+        self.addr = addr
+        self.host = host
