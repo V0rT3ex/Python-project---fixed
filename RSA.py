@@ -70,3 +70,36 @@ def generate_primes(path):
             if p != q:
                 break
     return p, q
+
+
+def generate_keys():
+    """ This function creates the public and private key and returns them."""
+
+    path = input("Enter the path of the file from whom you are reading the prime numbers:\t")
+    p, q = generate_primes(path)
+
+    # Creating the modulus(n).
+    n = p * q
+
+    # Creating the totient(phi).
+    phi = (p - 1) * (q - 1)
+
+    # Creating the public key.
+    e = randint(2, phi - 1)
+    # Looping until e is relatively prime to phi.
+    while True:
+        if gcd(e, phi) == 1:
+            break
+        e = randint(2, phi - 1)
+
+    # Creating the private_key.
+    k = 1
+    while True:
+        d = (1 + k * phi)/ e
+        if d - int(d) == 0:
+            d = int(d)
+            break
+        k += 1
+
+    return (e, n), (d, n)
+
