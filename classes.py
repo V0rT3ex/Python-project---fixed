@@ -92,6 +92,24 @@ class Client:
         addr: The IP address of the server.
         host: The port the server listens from.
         """
-        
+
         self.addr = addr
         self.host = host
+
+    def socket_operations(self):
+        """
+        This function tries to open the client's socket.
+        If it opens successfully, it binds the socket to the server and returns the socket.
+        Otherwise, it will print an error message and close the socket.
+        """
+
+        try:
+            my_socket = socket.socket()
+        except Exception as e:
+            print("Socket could not be open! Check your network, Something went wrong in it")
+            my_socket.close()
+        else:
+            my_socket.connect((self.addr, self.host))
+            return my_socket
+
+
