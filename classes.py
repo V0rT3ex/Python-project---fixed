@@ -112,4 +112,15 @@ class Client:
             my_socket.connect((self.addr, self.host))
             return my_socket
 
+    def recv_pub_key(self):
+        """
+        This function receives the public key in a string form
+        and returns it in a tuple form.
+        """
 
+        my_socket = self.socket_operations()
+        pub_key = my_socket.recv(1024).decode('utf-8')
+        pub_key = [item for item in pub_key]
+        pub_key = (int(pub_key[1]), int(pub_key[4]))
+        my_socket.close()
+        return pub_key
