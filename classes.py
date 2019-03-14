@@ -16,6 +16,7 @@ def check_file_path(path):
             return 'continue'
     return 'continue'
 
+
 class Server:
     def __init__(self, addr, port, listens):
         """
@@ -54,4 +55,31 @@ class Server:
         client_socket.close()
         return priv_key
 
+    def recv_text_file(self):
+        """
+        This function receives data from the client and writes it to
+        a file.
+        """
+
+        # Asking the server's user to insert a path to create a text file in.
+        path = input("Enter a path in which you would like to create a file:\t")
+        if check_file_path(path):
+
+            # Opening the file to a write mode.
+            with open(path, mode='wt', encoding='utf-8') as f:
+                # Preparing the keys and the client_socket.
+                priv_key = self.prepare_keys()
+                client_socket = self.socket_operations()
+
+                data = client_socket.recv(1024).decode('utf-8')
+
+                # Looping until the client sends no data.
+                while True:
+                    if not data:
+                        break
+                    # Decrypting the data, writing it to the file and "re-inputting it".
+                    data = decrypt(data, priv_key)
+                    f.write(data)
+                    data = client_socket.recv(1024).decode('utf-8')
+                client_socket.close()
 
