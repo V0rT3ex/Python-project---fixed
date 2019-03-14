@@ -123,3 +123,26 @@ def encrypt(message, pub_key):
     return string_cipher
 
 
+def decrypt(string_cipher, pri_key):
+    """
+    This function receives a message(string_cipher) to decrypt and a private-key(pri_key).
+    It returns a string which represents the original message.
+    """
+
+    d, n = pri_key
+    # Splitting by each comma.
+    cipher = string_cipher.split(',')
+
+    # Setting the list to be from its beginning to the end excluding the last item.
+    cipher = cipher[:-1]
+
+    # Decrypting
+    cipher = [(int(item) ** d % n) for item in cipher]
+
+    # Transforming each item to a character.
+    decrypted_data = [chr(item) for item in cipher]
+    # Transforming the list into a string.
+    decrypted_data = ''.join(decrypted_data)
+    return decrypted_data
+
+
