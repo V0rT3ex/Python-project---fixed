@@ -117,7 +117,7 @@ def encrypt(message, pub_key):
 
     # Transforming each character in the message to its ascii.
     cipher = [ord(char) for char in message]
-    # Encrpting
+    # Encrypting
     cipher = [(number ** e % n) for number in cipher]
     # Creating a list which contains each number from cipher and a comma.
     string_cipher = [str(number) + ',' for number in cipher]
@@ -150,11 +150,26 @@ def decrypt(string_cipher, pri_key):
 
 
 if __name__ == '__main__':
-    path = input("Enter a path to create a prime file:\t")
-    generate_prime_file(200, path)
-    pub_key, priv_key  = generate_keys()
-    message = input("Enter a message you'd like to encrypt:\t")
-    e = encrypt(message, pub_key)
-    print("Encrypted data:\t{}".format(e))
-    print("Decrypted data:\t{}".format(decrypt(e, priv_key)))
+    # path = input("Enter a path to create a prime file:\t")
+    # generate_prime_file(200, path)
+    # pub_key, priv_key = generate_keys()
+    # print(priv_key, pub_key)
+    # message = input("Enter a message you'd like to encrypt:\t")
+    # e = encrypt(message, pub_key)
+    # print("Encrypted data:\t{}".format(e))
+    # print("Decrypted data:\t{}".format(decrypt(e, priv_key)))
+    pub_key = (3049, 10349)
+    pub_key = str(pub_key)
+    data = ''
+    flag = True
+    for i in range(1, len(pub_key) - 1):
+        if ord(pub_key[i]) - ord('0') >= 0 and ord(pub_key[i]) - ord('0') <= 9:
+            data += pub_key[i]
+        elif flag:
+            data += ','
+            flag = False
+    data = data.split(',')
+    print(data)
+    data = (int(data[0]), int(data[1]))
+    print(data)
 
