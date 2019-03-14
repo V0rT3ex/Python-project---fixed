@@ -36,3 +36,37 @@ def generate_prime_file(a, path):
         # Writing each number to the file delimited by comma(,).
         for number in prime_list:
             f.write(str(number) + ",")
+
+
+def generate_primes(path):
+    """
+    This function receives a path of a file.
+    The file contains prime numbers which will be read into a list.
+    The function returns two different random prime numbers - p and q.
+    If an error occurs, p and q will be -1 in default.
+    """
+
+    p, q = -1, -1
+
+    # Opening a file to read from the prime numbers.
+    with open(path, mode='rt', encoding='utf-8') as f:
+        chunk_size = 256
+        # Reading from the file until there is no content.
+        prime_list = f.read(chunk_size)
+        while True:
+            content = f.read(chunk_size)
+            if not content:
+                break
+            prime_list += content
+        # Transforming the data from str to a list and delimiting by the comma.
+        prime_list = prime_list.split(',')
+        # Setting the list to be from its beginning to the end excluding the last item.
+        prime_list = prime_list[:-1]
+
+        # Looping until p and q, two random numbers from the list, are different.
+        while True:
+            p = int(prime_list[randint(0, len(prime_list) - 1)])
+            p = int(prime_list[randint(0, len(prime_list) - 1)])
+            if p != q:
+                break
+    return p, q
