@@ -149,6 +149,12 @@ def decrypt(string_cipher, pri_key):
     return decrypted_data
 
 
-
-
+if __name__ == '__main__':
+    path = input("Enter a path to create a prime file:\t")
+    generate_prime_file(200, path)
+    pub_key, priv_key  = generate_keys()
+    message = input("Enter a message you'd like to encrypt:\t")
+    e = encrypt(message, pub_key)
+    print("Encrypted data:\t{}".format(e))
+    print("Decrypted data:\t{}".format(decrypt(e, priv_key)))
 
