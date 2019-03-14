@@ -124,3 +124,28 @@ class Client:
         pub_key = (int(pub_key[1]), int(pub_key[4]))
         my_socket.close()
         return pub_key
+
+    def send_text_file(self, path):
+        """
+        This function receives a path and reads the data from the file in this path.
+        It sends the data to the server in an encrypted form.
+        """
+
+        # Opening the file in a read mode.
+        with open(path, mode='rt', encoding='utf-8') as f:
+
+            # Creating the public key and preparing the socket.
+            pub_key = self.recv_pub_key()
+            my_socket = self.socket_operations()
+
+            chunk_size = 1024
+            f_contens =f.read(chunk_size)
+            # Reading the file's content until there is nothing to read.
+            while True:
+                if len(f_contens) == 0:
+                    break
+                # Encrypting the data, sending it to the server and reading the new data.
+                f_contens = encrypt(f_contens, pub_key)
+                my_socket.send(f_contens.encode('utf-8'))
+                f_contens = f.read(chunk_size)
+            my_socket.close()
