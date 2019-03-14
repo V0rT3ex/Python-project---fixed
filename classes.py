@@ -18,3 +18,14 @@ class Server:
         self.port = port
         self.listens = listens
 
+    def socket_operations(self):
+        """
+        This function creates the server's socket and the client's socket,
+        it binds the server's socket to the address and port passed in the init method,
+        listens to the amount of clients and returns the client's socket.
+        """
+        server_socket = socket.socket()
+        server_socket.bind((self.addr, self.port))
+        server_socket.listen(self.listens)
+        client_socket, client_address =server_socket.accept()
+        return client_socket
