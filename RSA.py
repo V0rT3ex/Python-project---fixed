@@ -1,4 +1,4 @@
-import os
+import sys
 from math import gcd
 from random import randint
 
@@ -66,7 +66,7 @@ def generate_primes(path):
         # Looping until p and q, two random numbers from the list, are different.
         while True:
             p = int(prime_list[randint(0, len(prime_list) - 1)])
-            p = int(prime_list[randint(0, len(prime_list) - 1)])
+            q = int(prime_list[randint(0, len(prime_list) - 1)])
             if p != q:
                 break
     return p, q
@@ -77,6 +77,9 @@ def generate_keys():
 
     path = input("Enter the path of the file from whom you are reading the prime numbers:\t")
     p, q = generate_primes(path)
+    if p == -1 or q == -1:
+        print("Something went wrong! Please make sure everything is alright.")
+        sys.exit()
 
     # Creating the modulus(n).
     n = p * q
@@ -144,5 +147,8 @@ def decrypt(string_cipher, pri_key):
     # Transforming the list into a string.
     decrypted_data = ''.join(decrypted_data)
     return decrypted_data
+
+
+
 
 
