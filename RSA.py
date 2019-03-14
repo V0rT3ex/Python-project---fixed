@@ -22,3 +22,17 @@ def is_prime(n):
     return True
 
 
+def generate_prime_file(a, path):
+    """
+    This function creates a list of prime numbers under the upper boundary denoted by a.
+    It also writes the list to a file.
+    """
+
+    # Creating a list of prime numbers.
+    prime_list = [i for i in range(a + 1) if is_prime(i)]
+
+    # Opening a file in the path passed as a parameter, to write to.
+    with open(path, mode='wt', encoding='utf-8') as f:
+        # Writing each number to the file delimited by comma(,).
+        for number in prime_list:
+            f.write(str(number) + ",")
