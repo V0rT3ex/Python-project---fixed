@@ -4,6 +4,18 @@ import sys
 from RSA import generate_prime_file, encrypt,decrypt, generate_keys
 
 
+def check_file_path(path):
+    if os.path.exists(path):
+        print("A file already exists in this path. Would you like to overwrite it ?")
+        will = input("Enter y for yes or n for no:\t")
+        while will != 'y' and will != 'n':
+            will = input("Please enter y for yes or n for no. Do not enter any other character:\t")
+        if will == 'n':
+            sys.exit()
+        else:
+            return 'continue'
+    return 'continue'
+
 class Server:
     def __init__(self, addr, port, listens):
         """
@@ -41,3 +53,5 @@ class Server:
         client_socket.send(str(pub_key).encode('utf-8'))
         client_socket.close()
         return priv_key
+
+
