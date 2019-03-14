@@ -29,3 +29,15 @@ class Server:
         server_socket.listen(self.listens)
         client_socket, client_address =server_socket.accept()
         return client_socket
+
+    def prepare_keys(self):
+        """
+        This function prepares the keys for the server(priv_key) and for the
+        client(pub_key). It sends to the client the pub_key and returns the priv_key.
+        """
+
+        client_socket = self.socket_operations()
+        pub_key, priv_key = generate_keys()
+        client_socket.send(str(pub_key).encode('utf-8'))
+        client_socket.close()
+        return priv_key
