@@ -103,3 +103,23 @@ def generate_keys():
 
     return (e, n), (d, n)
 
+
+def encrypt(message, pub_key):
+    """
+    This function receives a message to encrypt and a public-key(denoted by pub_key).
+    It returns a string which represents a sequence of encrypted numbers.
+    """
+
+    e, n = pub_key
+
+    # Transforming each character in the message to its ascii.
+    cipher = [ord(char) for char in message]
+    # Encrpting
+    cipher = [(number ** e % n) for number in cipher]
+    # Creating a list which contains each number from cipher and a comma.
+    string_cipher = [str(number) + ',' for number in cipher]
+    # Transforming the list to a string.
+    string_cipher = ''.join(string_cipher)
+    return string_cipher
+
+
