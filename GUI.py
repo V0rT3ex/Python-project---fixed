@@ -8,6 +8,11 @@ This module is consist of a Graphical User Interface
 """
 
 
+def pack(*args, side=None):
+    for item in args:
+        item.pack(side)
+
+
 def main():
 
     # Creating a blank window (root var)
