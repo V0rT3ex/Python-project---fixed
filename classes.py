@@ -1,20 +1,9 @@
 import socket
 import os
 import sys
-from RSA import generate_prime_file, encrypt,decrypt, generate_keys
-
-
-def check_file_path(path):
-    if os.path.exists(path):
-        print("A file already exists in this path. Would you like to overwrite it ?")
-        will = input("Enter y for yes or n for no:\t")
-        while will != 'y' and will != 'n':
-            will = input("Please enter y for yes or n for no. Do not enter any other character:\t")
-        if will == 'n':
-            sys.exit()
-        else:
-            return 'continue'
-    return 'continue'
+from RSA import encrypt,decrypt, generate_keys
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
 
 class Server:
@@ -40,7 +29,7 @@ class Server:
         server_socket = socket.socket()
         server_socket.bind((self.addr, self.port))
         server_socket.listen(self.listens)
-        client_socket, client_address =server_socket.accept()
+        client_socket, client_address = server_socket.accept()
         return client_socket
 
     def prepare_keys(self):
@@ -61,29 +50,28 @@ class Server:
         a file.
         """
 
+        Tk().withdraw()
         # Asking the server's user to insert a path to create a text file in.
-        path = input("Enter a path in which you would like to create a file:\t")
-        if check_file_path(path):
+        path = askopenfilename()
 
-            # Opening the file to a write mode.
-            with open(path, mode='wt', encoding='utf-8') as f:
-                # Preparing the keys and the client_socket.
-                priv_key = self.prepare_keys()
-                print(priv_key)
-                client_socket = self.socket_operations()
+        # Opening the file to a write mode.
+        with open(path, mode='wt', encoding='utf-8') as f:
+            # Preparing the keys and the client_socket.
+             priv_key = self.prepare_keys()
+             client_socket = self.socket_operations()
 
+             data = client_socket.recv(1024).decode('utf-8')
+
+             # Looping until the client sends no data.
+             while True:
+                if not data:
+                    break
+                # Decrypting the data, writing it to the file and "re-inputting it".
+                data = decrypt(data, priv_key)
+                f.write(data)
                 data = client_socket.recv(1024).decode('utf-8')
+             client_socket.close()
 
-                # Looping until the client sends no data.
-                while True:
-                    if not data:
-                        break
-                    # Decrypting the data, writing it to the file and "re-inputting it".
-                    print(data)
-                    data = decrypt(data, priv_key)
-                    f.write(data)
-                    data = client_socket.recv(1024).decode('utf-8')
-                client_socket.close()
 
 
 class Client:
@@ -136,30 +124,30 @@ class Client:
         my_socket.close()
         return pub_key
 
-    def send_text_file(self, path):
+    def send_text_file(self):
         """
         This function receives a path and reads the data from the file in this path.
         It sends the data to the server in an encrypted form.
         """
+        Tk().withdraw()
+        # Asking the server's user to insert a path to create a text file in.
+        path = askopenfilename()
 
         # Opening the file in a read mode.
         with open(path, mode='rt', encoding='utf-8') as f:
 
             # Creating the public key and preparing the socket.
             pub_key = self.recv_pub_key()
-            print(pub_key)
             my_socket = self.socket_operations()
 
             chunk_size = 256
             f_contents = f.read(chunk_size)
             # Reading the file's content until there is nothing to read.
             while True:
-                print(type(f_contents))
                 if len(f_contents) == 0:
                     break
                 # Encrypting the data, sending it to the server and reading the new data.
                 f_contents = encrypt(f_contents, pub_key)
-                print(f_contents)
                 my_socket.send(f_contents.encode('utf-8'))
                 f_contents = f.read(chunk_size)
             my_socket.close()

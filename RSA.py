@@ -1,6 +1,8 @@
 import sys
 from math import gcd
 from random import randint
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
 
 def is_prime(n):
@@ -75,7 +77,10 @@ def generate_primes(path):
 def generate_keys():
     """ This function creates the public and private key and returns them."""
 
-    path = input("Enter the path of the file from whom you are reading the prime numbers:\t")
+    Tk().withdraw()
+    # Asking the server's user to insert a path to create a text file in.
+    path = askopenfilename()
+
     p, q = generate_primes(path)
     if p == -1 or q == -1:
         print("Something went wrong! Please make sure everything is alright.")

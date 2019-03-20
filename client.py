@@ -1,12 +1,13 @@
 from classes import Client
+from GUI import main
 
 
-def main():
+def run():
    c = Client('127.0.0.1', 8820)
-   c.send_text_file('README.txt')
-
+   c.send_text_file()
 
 if __name__ == '__main__':
-   main()
+   run()
+   # main()
 
 
