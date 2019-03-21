@@ -43,11 +43,13 @@ def details(frame, text, next_frame):
     if text == "Client":
         client_label = Label(frame, text="Client")
         client_label.grid(row=1)
-        proceed_button = Button(frame, text="Proceed", command=lambda: proceed(next_frame, "Client", ip_entry, port_entry))
+        proceed_button = Button(frame, text="Proceed",
+                                command=lambda: proceed(next_frame, "Client", ip_entry, port_entry))
     else:
         server_label = Label(frame, text="Server")
         server_label.grid(row=1)
-        proceed_button = Button(frame, text="Proceed", command=lambda: proceed(next_frame, "Server", ip_entry, port_entry))
+        proceed_button = Button(frame, text="Proceed",
+                                command=lambda: proceed(next_frame, "Server", ip_entry, port_entry))
 
     ip_label.grid(row=2)
     port_label.grid(row=3)

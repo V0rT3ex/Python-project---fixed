@@ -7,7 +7,7 @@ def run():
    c.send_text_file()
 
 if __name__ == '__main__':
-   run()
-   # main()
+   # run()
+   main()
 
 

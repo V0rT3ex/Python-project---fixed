@@ -6,6 +6,6 @@ def run():
    s.recv_text_file()
 
 if __name__ == '__main__':
-   # main()
-   run()
+   main()
+   # run()
 

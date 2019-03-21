@@ -1,6 +1,4 @@
 import socket
-import os
-import sys
 from RSA import encrypt,decrypt, generate_keys
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
@@ -71,7 +69,7 @@ class Server:
                 f.write(data)
                 data = client_socket.recv(1024).decode('utf-8')
              client_socket.close()
-
+        exit(0)
 
 
 class Client:
@@ -140,7 +138,7 @@ class Client:
             pub_key = self.recv_pub_key()
             my_socket = self.socket_operations()
 
-            chunk_size = 256
+            chunk_size = 5
             f_contents = f.read(chunk_size)
             # Reading the file's content until there is nothing to read.
             while True:
@@ -151,3 +149,4 @@ class Client:
                 my_socket.send(f_contents.encode('utf-8'))
                 f_contents = f.read(chunk_size)
             my_socket.close()
+        exit(0)
