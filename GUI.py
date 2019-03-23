@@ -12,10 +12,21 @@ server = None
 
 
 def raise_frame(frame):
+    """
+    This function raises the frame, passed as a parameter,
+    on the screen.
+    """
+
     frame.tkraise()
 
 
 def proceed(frame, name, ip_entry, port_entry):
+    """
+    This function receives frame, name, ip_entry, port_entry as
+    parameters. It raises the frame, creates an instance of the Client/Server class according
+    to the name parameter and binds a button to the send/receive text file function.
+    """
+
     ip = ip_entry.get()
     port = port_entry.get()
     if ip != '' and port != '':
@@ -35,6 +46,11 @@ def proceed(frame, name, ip_entry, port_entry):
 
 
 def details(frame, text, next_frame):
+    """
+    This function receives frame, text, next_frame as paremters.
+    It raises the frame, and creates a details page for a Client/Server.
+    """
+
     raise_frame(frame)
     ip_label = Label(frame, text="IP:")
     port_label = Label(frame, text="Port:")
@@ -59,6 +75,11 @@ def details(frame, text, next_frame):
 
 
 def main():
+    """
+    The main function is responsible for running
+    the initial frame.
+    """
+
     root = Tk()
     root.geometry('500x500')
     photo = PhotoImage(file="return.png")
@@ -70,7 +91,7 @@ def main():
         frame.grid(row=0, column=0, sticky='news')
 
     # main_frame:
-    main_label = Label(main_frame, text="Choose client of server:")
+    main_label = Label(main_frame, text="Choose client or server:")
     main_label.pack()
     client_button = Button(main_frame, text="Client", command=lambda: details(client_frame, "Client", last_frame))
     server_button = Button(main_frame, text="Server", command=lambda: details(server_frame, "Server", last_frame))

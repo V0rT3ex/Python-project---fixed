@@ -1,5 +1,5 @@
 import socket
-from RSA import encrypt,decrypt, generate_keys
+from RSA import encrypt, decrypt, generate_keys
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
