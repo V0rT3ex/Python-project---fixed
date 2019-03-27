@@ -12,13 +12,13 @@ def is_prime(n):
     Time complexity is O(n**0.5) in the worst case.
     """
 
-    if n == 2 or n == 3:
+    if n == 2:
         return True
-    elif n < 2 or n % 2 == 0 or n % 3 == 0:
+    elif n < 2 or n % 2 == 0:
         return False
 
     # Looping until i reaches the square root of n
-    for i in range(4, int(n ** 0.5) + 1):
+    for i in range(3, int(n ** 0.5) + 1, 2):
         if n % i == 0:
             return False
     return True
@@ -103,7 +103,7 @@ def generate_keys():
     # Creating the private_key.
     k = 1
     while True:
-        d = (1 + k * phi)/ e
+        d = (1 + k * phi) / e
         if d - int(d) == 0:
             d = int(d)
             break
@@ -145,7 +145,7 @@ def decrypt(string_cipher, pri_key):
     cipher = cipher[:-1]
 
     # Decrypting
-    cipher = [(int(item) ** d % n) for item in cipher]
+    cipher = [(int(item) ** d % n) for item in cipher if item != '']
 
     # Transforming each item to a character.
     decrypted_data = [chr(item) for item in cipher]

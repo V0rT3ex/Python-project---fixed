@@ -45,30 +45,30 @@ class Server:
     def recv_text_file(self):
         """
         This function receives data from the client and writes it to
-        a file.
+        a file the server's user chooses.
         """
 
         Tk().withdraw()
         # Asking the server's user to insert a path to create a text file in.
         path = askopenfilename()
 
-        # Opening the file to a write mode.
+        # Opening the file in a write mode.
         with open(path, mode='wt', encoding='utf-8') as f:
             # Preparing the keys and the client_socket.
-             priv_key = self.prepare_keys()
-             client_socket = self.socket_operations()
+            priv_key = self.prepare_keys()
+            client_socket = self.socket_operations()
 
-             data = client_socket.recv(1024).decode('utf-8')
+            data = client_socket.recv(1024).decode('utf-8')
 
-             # Looping until the client sends no data.
-             while True:
+            # Looping until the client sends no data at all.
+            while True:
                 if not data:
                     break
                 # Decrypting the data, writing it to the file and "re-inputting it".
                 data = decrypt(data, priv_key)
                 f.write(data)
                 data = client_socket.recv(1024).decode('utf-8')
-             client_socket.close()
+            client_socket.close()
         exit(0)
 
 
